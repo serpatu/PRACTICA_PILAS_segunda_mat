@@ -78,7 +78,6 @@ public class Expresion {
 
     public String notacionPostfija() {
         // TODO Apartado 5.3
-        int codigo = 9;
         return null;  // Quitar esta línea al hacer la práctica
     }
 
