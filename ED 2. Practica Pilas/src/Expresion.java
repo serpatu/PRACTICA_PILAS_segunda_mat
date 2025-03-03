@@ -78,7 +78,33 @@ public class Expresion {
 
     public String notacionPostfija() {
         // TODO Apartado 5.3
-        return null;  // Quitar esta línea al hacer la práctica
+        Stack<Character> operadoresPendientes = new Stack<>();
+        String  resultado = null;
+
+        for (int i = 0; i < expresion.length(); i++) {
+            char actual = expresion.charAt(i);
+
+            if (esOperando(actual)) {
+                resultado += actual;
+            } else if (actual == '(') {
+                operadoresPendientes.push(actual);
+            } else if (actual == ')') {
+                while (!operadoresPendientes.isEmpty() && operadoresPendientes.peek() != '(') {
+                    resultado += operadoresPendientes.pop();
+                }
+                operadoresPendientes.pop();
+            } else if (esOperador(actual)) {
+                while (!operadoresPendientes.isEmpty() && esOperador(operadoresPendientes.peek()) && precedencia(operadoresPendientes.peek()) >= precedencia(actual)) {
+                    resultado += operadoresPendientes.pop();
+                }
+                operadoresPendientes.push(actual);
+            }
+        }
+        while (!operadoresPendientes.isEmpty()) {
+            resultado += operadoresPendientes.pop();
+        }
+
+        return resultado;
     }
 
     public double calcularResultado(double[] operandos) {
