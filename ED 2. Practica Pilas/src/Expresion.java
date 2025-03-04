@@ -76,12 +76,13 @@ public class Expresion {
         }
     }
 
-    public String notacionPostfija() {
+    public String notacionPostfija() { //revisar este método, no funciona como debe, está sacando aba+*c/ y
+        //debe sacar ab+a*c/
         // TODO Apartado 5.3
         Stack<Character> operadoresPendientes = new Stack<>();
-        String  resultado = null;
+        String  resultado = "";
 
-        for (int i = 0; i < expresion.length(); i++) {
+        for (int i = 0; i < this.expresion.length(); i++) {
             char actual = expresion.charAt(i);
 
             if (esOperando(actual)) {
@@ -109,7 +110,35 @@ public class Expresion {
 
     public double calcularResultado(double[] operandos) {
         // TODO Apartado 5.4
-        return 0;  // Quitar esta línea al hacer la práctica
+        Stack<Double> operandosLeidos = new Stack<>();
+        String postFija = notacionPostfija();
+        for (int i = 0; i < postFija.length(); i++) {
+            char actual = postFija.charAt(i);
+            if (esOperando(actual)) {
+                operandosLeidos.push(operandos[actual - 'a']);
+            } else {
+                if (esOperador(actual)) {
+                    double a = operandosLeidos.pop();
+                    double b = operandosLeidos.pop();
+
+                    switch (actual) {
+                        case '+':
+                            operandosLeidos.push(a + b);
+                            break;
+                        case '-':
+                            operandosLeidos.push(a - b);
+                            break;
+                        case '*':
+                            operandosLeidos.push(a * b);
+                            break;
+                        case '/':
+                            operandosLeidos.push(a / b);
+                            break;
+                    }
+                }
+            }
+        }
+        return operandosLeidos.pop();
     }
 
 }
