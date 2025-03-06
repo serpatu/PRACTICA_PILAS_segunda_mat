@@ -83,28 +83,42 @@ public class Expresion {
         String  resultado = "";
 
         for (int i = 0; i < this.expresion.length(); i++) {
-            char actual = expresion.charAt(i);
+            char actual = this.expresion.charAt(i);
 
-            if (esOperando(actual)) {
+            if(esOperando(actual)){
                 resultado += actual;
-            } else if (actual == '(') {
-                operadoresPendientes.push(actual);
-            } else if (actual == ')') {
-                while (!operadoresPendientes.isEmpty() && operadoresPendientes.peek() != '(') {
-                    resultado += operadoresPendientes.pop();
+            }
+            else{
+                if(esOperador(actual)){
+                    if(!operadoresPendientes.isEmpty()){
+                        while(!operadoresPendientes.isEmpty() && precedencia(operadoresPendientes.peek()) >=
+                            precedencia(actual)){
+                            resultado += operadoresPendientes.pop();
+                        }
+                        operadoresPendientes.push(actual);
+                    }
+                    else{
+                        operadoresPendientes.push(actual);
+                    }
                 }
-                operadoresPendientes.pop();
-            } else if (esOperador(actual)) {
-                while (!operadoresPendientes.isEmpty() && esOperador(operadoresPendientes.peek()) && precedencia(operadoresPendientes.peek()) >= precedencia(actual)) {
-                    resultado += operadoresPendientes.pop();
+                else{
+                    if(actual == '('){
+                        operadoresPendientes.push(actual);
+                    }
+                    else{
+                        if(actual == ')'){
+                            while(!operadoresPendientes.isEmpty() && operadoresPendientes.peek() != '('){
+                                resultado += operadoresPendientes.pop();
+                            }
+                            operadoresPendientes.pop();
+                        }
+                    }
                 }
-                operadoresPendientes.push(actual);
             }
         }
         while (!operadoresPendientes.isEmpty()) {
             resultado += operadoresPendientes.pop();
         }
-
         return resultado;
     }
 
@@ -123,16 +137,16 @@ public class Expresion {
 
                     switch (actual) {
                         case '+':
-                            operandosLeidos.push(a + b);
+                            operandosLeidos.push(b + a);
                             break;
                         case '-':
-                            operandosLeidos.push(a - b);
+                            operandosLeidos.push(b - a);
                             break;
                         case '*':
-                            operandosLeidos.push(a * b);
+                            operandosLeidos.push(b * a);
                             break;
                         case '/':
-                            operandosLeidos.push(a / b);
+                            operandosLeidos.push(b / a);
                             break;
                     }
                 }

@@ -7,16 +7,16 @@ import java.util.Arrays;
 public class Aplicacion {
 
     public static void main(String[] args) {
-        String expr = "a*(b+a)/c";  // Poner aquí la expresión con la que trabajar
+        String expr = "a+(b*c+d)-e";  // Poner aquí la expresión con la que trabajar
         Expresion expresion = new Expresion(expr);
 
         if(expresion.validarEstructura()){
             if(expresion.comprobarParentesis()){
                 String postFija = expresion.notacionPostfija();
                 System.out.println(postFija);
-                try(BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\mario\\OneDrive\\Escritorio" +
-                        "\\UPM" + "\\1º AÑO\\SEGUNDO CUATRI\\ESTRUCTURA DE DATOS\\SEGUNDA MATRÍCULA" +
-                        "\\ED 2. Practica Pilas\\ED 2. Practica Pilas\\datos.txt"))){
+                try(BufferedReader br = new BufferedReader(new FileReader("D:\\UPM\\PRIMER AÑO\\SEGUNDO CUATRI" +
+                        "\\ESTRUCTURA DE DATOS\\SEGUNDA_MATRICULA\\ED PRACTICA 2 (PILAS)\\ED 2. Practica Pilas" +
+                        "\\datos.txt"))){
                     String linea;
                     while ((linea = br.readLine()) != null) {
                         String[] valores = linea.split("\\s+");
