@@ -76,8 +76,7 @@ public class Expresion {
         }
     }
 
-    public String notacionPostfija() { //revisar este método, no funciona como debe, está sacando aba+*c/ y
-        //debe sacar ab+a*c/
+    public String notacionPostfija() {
         // TODO Apartado 5.3
         Stack<Character> operadoresPendientes = new Stack<>();
         String  resultado = "";
